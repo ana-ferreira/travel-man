@@ -1,12 +1,17 @@
-export default [
-  { header : true, text : 'MAIN NAVIGATION' },
+import Places from 'containers/places/Places.react';
+
+
+const menu = [
+  { header: true, text: 'MAIN NAVIGATION' },
+  { text: 'Home', link: '/', icon: 'home' },
+  { text: 'Places', link: '/places', icon: 'map-marker', component: Places },
   {
-    icon:'dashboard', text: 'Dashboard', children: [
-      {text: 'Home', link: '/'},
-      {text: 'Lists', link: '/lists'},
-    ]
-  },
-  {
-    icon : 'calendar', text: 'Calendar', link: 'calendar'
+    icon: 'calendar',
+    text: 'Calendar',
+    link: 'calendar'
   }
 ];
+
+
+
+export default menu;

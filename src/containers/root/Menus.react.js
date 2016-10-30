@@ -1,6 +1,6 @@
 import {MessagesMenu, NotificationsMenu, TasksMenu, UserAccountMenu} from 'components/RightMenu.react';
 import userImage from 'admin-lte/dist/img/user2-160x160.jpg';
-
+import FontAwesome from 'react-fontawesome';
 
 const messages = [
   {
@@ -36,7 +36,9 @@ export default (props) => {
         <UserAccountMenu />
         {/* Control Sidebar Toggle Button */}
         <li>
-          <a href="#" onClick={props.toggleControl}><i className="fa fa-gears" /></a>
+          <a href="#" onClick={props.toggleControl}>
+            <FontAwesome name="gears" />
+          </a>
         </li>
       </ul>
     </div>

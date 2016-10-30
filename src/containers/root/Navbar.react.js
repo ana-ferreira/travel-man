@@ -1,6 +1,6 @@
 import Logo from 'components/Logo.react';
 import Menus from './Menus.react';
-
+import {Link} from 'react-router';
 
 const mini = (<span><b>T</b>Man</span>)
 const large = (<span><b>Travel</b>Man</span>);
@@ -9,7 +9,9 @@ export default (props) => {
     return (
       <header className="main-header">
         {/* Logo */}
-        <Logo mini={mini} lg={large} href="index2.html" />
+        <Link to="/">
+          <Logo mini={mini} lg={large}/>
+        </Link>
         {/* Header Navbar: style can be found in header.less */}
         <nav className="navbar navbar-static-top">
           {/* Sidebar toggle button*/}

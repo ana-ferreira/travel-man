@@ -1,6 +1,6 @@
 import imgSrc from 'admin-lte/dist/img/user2-160x160.jpg';
 import UserImage from './UserImage.react';
-
+import FontAwesome from 'react-fontawesome';
 /**
 * Generic Menu
 */
@@ -8,8 +8,14 @@ const Menu = (props) => {
   return (
     <li className={"dropdown "+props.menu+"-menu"}>
       <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-        <i className={"fa fa-"+props.icon} />
-        <span className={"label label-"+props.label.status}>{props.label.value}</span>
+        <FontAwesome name={props.icon} />
+        {
+            props.label.value ?
+              <span className={"label label-"+props.label.status}>{props.label.value}</span>
+              :
+              <span></span>
+        }
+
       </a>
       <ul className="dropdown-menu">
         <li className="header">{props.header}</li>
