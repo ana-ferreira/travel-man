@@ -112,7 +112,8 @@ class Places extends React.Component {
     super();
     this.state = {
       addModalOpen: false,
-      view: 'card'
+      view: 'list',
+      sort : 'alpha'
     }
   }
 
@@ -135,7 +136,7 @@ class Places extends React.Component {
   render() {
     let view = this.props.loading ?
       <Col lg={12} className="text-center"><FontAwesome name="spinner" spin size='2x'/></Col>
-      : <Place.View places={this.props.places} type={this.state.view}/>;
+      : <Place.View places={this.props.places} type={this.state.view} sort={this.state.sort}/>;
     console.log(this.props.loading, 'LOADINGGG');
     return (
       <ContentWrapper header="Places" subHeader="All travel places">
