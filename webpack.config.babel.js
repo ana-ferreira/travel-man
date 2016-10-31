@@ -32,13 +32,18 @@ const WebpackProviderConfig = new webpack.ProvidePlugin({
   'React': 'react'
 });
 
+var PROD = process.env.NODE_ENV === 'production';
+const DefinePlugin = new webpack.DefinePlugin({
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+});
 
 
 let plugins = [
   DotenvPluginConfig,
   HTMLWebpackPluginConfig,
   BrowserSyncPluginConfig,
-  WebpackProviderConfig
+  WebpackProviderConfig,
+  DefinePlugin
 ];
 
 
@@ -59,7 +64,7 @@ let alias = {
   'jquery-ui': __dirname + '/node_modules/jquery-ui/ui/core.js'
 }
 
-var PROD = process.env.NODE_ENV === 'production';
+
 
 
 let config = {
