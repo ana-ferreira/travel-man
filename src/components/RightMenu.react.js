@@ -1,6 +1,6 @@
-import imgSrc from 'admin-lte/dist/img/user2-160x160.jpg';
 import UserImage from './UserImage.react';
-
+import FontAwesome from 'react-fontawesome';
+import gravatar from 'utils/gravatar';
 /**
 * Generic Menu
 */
@@ -8,8 +8,14 @@ const Menu = (props) => {
   return (
     <li className={"dropdown "+props.menu+"-menu"}>
       <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-        <i className={"fa fa-"+props.icon} />
-        <span className={"label label-"+props.label.status}>{props.label.value}</span>
+        <FontAwesome name={props.icon} />
+        {
+            props.label.value ?
+              <span className={"label label-"+props.label.status}>{props.label.value}</span>
+              :
+              <span></span>
+        }
+
       </a>
       <ul className="dropdown-menu">
         <li className="header">{props.header}</li>
@@ -24,13 +30,18 @@ const Menu = (props) => {
   )
 }
 
+
+
 /** Message **/
 const Message = (props) => {
+
+
+  let imgSrc = gravatar(props.msg.userImage);
   return (
     <li>
       <a href="#">
         <div className="pull-left">
-          <img src={props.msg.userImage} className="img-circle" alt="User Image" />
+          <img src={imgSrc} className="img-circle" alt="User Image" />
         </div>
         <h4>
           {props.msg.from}
@@ -43,10 +54,16 @@ const Message = (props) => {
 }
 
 export const MessagesMenu = (props) => {
+  let header = (
+    <p>
+      {`You have ${props.messages.length} messages`}
+      <a onClick={props.onClickDone} className="pull-right" href="#">Mark all as read</a>
+    </p>
+  )
   return (
     <Menu menu="messages" icon="envelope-o"
       label={{status: 'success', value: props.messages.length}}
-      header={`You have ${props.messages.length} messages`} >
+      header={header} >
 
       {props.messages.map((m, idx) => <Message key={idx} msg={m}/>)}
     </Menu>
@@ -65,10 +82,16 @@ const Notification = (props) => {
 }
 
 export const NotificationsMenu = (props) => {
+  let header = (
+    <p>
+      {`You have ${props.notifications.length} notifications`}
+      <a onClick={props.onClickDone} className="pull-right" href="#">Mark all as read</a>
+    </p>
+  )
   return (
     <Menu menu="notifications" icon="bell-o"
       label={{status: 'warning', value: props.notifications.length}}
-      header={`You have ${props.notifications.length} notifications`} >
+      header={header} >
 
       {
         props.notifications.map((m, idx) => {
@@ -108,18 +131,19 @@ export const TasksMenu = (props) => {
 
 
 export const UserAccountMenu = (props) => {
+  const imgSrc = gravatar('lucaskatayama@gmail.com');
   return (
     <li className="dropdown user user-menu">
       <a href="#" className="dropdown-toggle" data-toggle="dropdown">
         <UserImage src={imgSrc} className="user-image" />
-        <span className="hidden-xs">Alexander Pierce</span>
+        <span className="hidden-xs">User</span>
       </a>
       <ul className="dropdown-menu">
         {/* User image */}
         <li className="user-header">
           <UserImage src={imgSrc} />
           <p>
-            Alexander Pierce - Web Developer
+            User - Type
             <small>Member since Nov. 2012</small>
           </p>
         </li>

@@ -1,5 +1,5 @@
 import {Link} from 'react-router';
-
+import FontAwesome from 'react-fontawesome';
 
 const NavLink = (props, context) => {
 
@@ -31,19 +31,20 @@ const SidebarMenu = (props) => {
             )
           }
           else if(item.children && item.children.length > 0){
-            console.log(item);
             return (
               <li key={id} className="active treeview">
                 <a href="#">
-                  <i className={"fa fa-"+item.icon} /> <span>{item.text}</span>
+                  <FontAwesome name={item.icon} /> <span>{item.text}</span>
                   <span className="pull-right-container">
-                    <i className="fa fa-angle-left pull-right" />
+                    <FontAwesome name="angle-left" className="pull-right" />
                   </span>
                 </a>
                 <ul className="treeview-menu">
                 {
                   item.children.map((child, idx) => (
-                    <NavLink key={idx} to={child.link}><i className="fa fa-circle-o" /> {child.text}</NavLink>
+                    <NavLink key={idx} to={child.link}>
+                      <FontAwesome name="circle-o" /> {child.text}
+                    </NavLink>
                   ))
                 }
                 </ul>
@@ -53,7 +54,7 @@ const SidebarMenu = (props) => {
           else {
             return (
               <NavLink key={id} to={item.link}>
-                  <i className={"fa fa-"+item.icon} /> <span>{item.text}</span>
+                  <FontAwesome name={item.icon} /> <span>{item.text}</span>
                   <span className="pull-right-container">
                   </span>
               </NavLink>

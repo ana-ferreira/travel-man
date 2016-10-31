@@ -5,19 +5,15 @@ import App from './App.react';
 
 // Redux
 import {createStore, applyMiddleware} from 'redux';
-
 import thunk from 'redux-thunk';
 import reduxLogger from 'redux-logger';
-import promise from 'redux-promise';
+import promise from 'redux-promise-middleware';
 
+import reducers from 'reducers';
 
-
-const reducers = (state, action) => {
-  return state;
-}
 
 const logger = reduxLogger();
-const store = createStore(reducers, applyMiddleware(thunk, promise, logger));
+const store = createStore(reducers, applyMiddleware(thunk, promise(), logger));
 
 
 
