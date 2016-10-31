@@ -53,7 +53,6 @@ const Item = (props) => (
 )
 
 const ListItem = (props) => {
-  console.log('List Items', props.items)
   let items = props.items.map((item, idx) => (<Item key={idx} {...item}/>));
   return (
     <Col lg={12}>
