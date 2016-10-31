@@ -11,9 +11,15 @@ import promise from 'redux-promise-middleware';
 
 import reducers from 'reducers';
 
+let middlwares = applyMiddleware([
+  thunk,
+  promise()
+]);
+if(process.env.NODE_ENV !== 'production'){
+  middlwares = middlwares( reduxLogger());
+}
 
-const logger = reduxLogger();
-const store = createStore(reducers, applyMiddleware(thunk, promise(), logger));
+const store = createStore(reducers, middlwares);
 
 
 
