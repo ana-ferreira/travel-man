@@ -1,68 +1,144 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import ContentWrapper from 'components/ContentWrapper.react';
 import Place from 'components/Place.react';
-import {Modal, Button} from 'react-bootstrap';
+import {
+  Modal,
+  Button,
+  ButtonGroup,
+  Form,
+  Col,
+  FormControl,
+  FormGroup,
+  ControlLabel
+} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-const info = {
-  name : 'Piracicaba',
-  score: 7.6,
-  latlng: '',
-  description: `Cidade longa
-  blabalbal
-  blabalbal
-  blabalbal
-  `,
-  createdAt : new Date()
-}
 
-class Places extends React.Component {
+const ViewModes = (props) => (
 
-  constructor(){
+  <ButtonGroup className="pull-right" bsSize="xs">
+    <Button active={props.view === 'list'} onClick={props.changeView('list')}>
+      <FontAwesome name="list"/>{' List'}
+    </Button>
+    <Button active={props.view === 'card'} onClick={props.changeView('card')}>
+      <FontAwesome name="file-o"/>{' Card'}
+    </Button>
+    <Button active={props.view === 'map'} onClick={props.changeView('map')}>
+      <FontAwesome name="map"/>{' Map'}
+    </Button>
+  </ButtonGroup>
+)
+
+class AddForm extends React.Component {
+
+  constructor() {
     super();
     this.state = {
-      addModalOpen : false
+      name: ''
     }
   }
 
-  close = () => {
-    this.setState({addModalOpen : false})
+  onChangeName = (e) => {
+    this.setState({name: e.target.value})
   }
 
-  addPlace = () => {
-    this.setState({addModalOpen : true})
+
+  submit = (e) =>{
+    this.props.onSubmit({
+      name : this.state.name
+    });
+    this.props.close();
   }
 
-  render(){
+  render() {
     return (
-        <ContentWrapper header="Places" subHeader="All travel places">
-          <div className="row">
-            <div className="col-md-12">
-              <Button onClick={this.addPlace} bsStyle="success">
-                <FontAwesome name="plus" /> Add
-              </Button>
-            </div>
-          </div>
-          <p></p>
-          <div className="row">
+      <Modal show={this.props.isOpen} onHide={this.props.close}>
+        <Form action="" horizontal onSubmit={this.submit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add new place</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormGroup controlId="name">
+            <Col lg={2}>
+              <ControlLabel>Name</ControlLabel>
+            </Col>
+            <Col lg={10}>
+              <FormControl placeholder="Name" value={this.state.name} onChange={this.onChangeName}/>
+            </Col>
+          </FormGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit">Add</Button>
+        </Modal.Footer>
+      </Form>
+      </Modal>
 
-            <div className="col-md-3">
-              <Place {...info}/>
-            </div>
-          </div>
-
-          <Modal show={this.state.addModalOpen} onHide={this.close}>
-            <Modal.Header closeButton>
-              <Modal.Title>Add new place</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              alksndlanskln
-            </Modal.Body>
-          </Modal>
-        </ContentWrapper>
     )
   }
 }
 
+const mapStateToProps = (state, props) => {
+  return {places: state.places.places}
+}
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    createPlace:(place) => {
+      dispatch({type: 'PLACE_CREATE', place: place});
+    }
+  }
+}
+
+class Places extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      addModalOpen: false,
+      view: 'card'
+    }
+  }
+
+  close = () => {
+    this.setState({addModalOpen: false})
+  }
+
+  addPlace = () => {
+    this.setState({addModalOpen: true})
+  }
+
+  changeView = (view) => () => {
+    this.setState({view: view});
+  }
 
 
-export default Places;
+  render() {
+
+
+    return (
+      <ContentWrapper header="Places" subHeader="All travel places">
+        <div className="row">
+          <div className="col-md-12">
+            <Button onClick={this.addPlace} bsStyle="success">
+              <FontAwesome name="plus"/>
+              Add
+            </Button>
+            <ViewModes changeView={this.changeView} view={this.state.view}/>
+          </div>
+        </div>
+        <p></p>
+        <div className="row">
+          <Place.View places={this.props.places} type={this.state.view}/>
+        </div>
+
+        <AddForm
+          close={this.close}
+          isOpen={this.state.addModalOpen}
+          onSubmit={this.props.createPlace}/>
+      </ContentWrapper>
+    )
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Places);
