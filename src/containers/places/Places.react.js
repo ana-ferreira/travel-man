@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import ContentWrapper from 'components/ContentWrapper.react';
 import Place from 'components/Place.react';
 import ActionPlace from 'actions/places';
-
+import SearchPlace from './SearchPlace.react';
 
 import FontAwesome from 'react-fontawesome';
 import {
@@ -17,7 +17,6 @@ import {
   FormGroup,
   ControlLabel
 } from 'react-bootstrap';
-
 
 const ViewModes = (props) => (
 
@@ -39,44 +38,37 @@ class AddForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      name: ''
+      place: ''
     }
   }
 
-  onChangeName = (e) => {
-    this.setState({name: e.target.value})
+
+  submit = (e) => {
+    this.props.onSubmit({place: this.state.place});
+    this.setState({place: ''});
+    this.props.close();
   }
 
-
-  submit = (e) =>{
-    this.props.onSubmit({
-      name : this.state.name
-    });
-    this.setState({name : ''});
-    this.props.close();
+  onSelectPlace = (place) => {
+    this.setState({place: place})
   }
 
   render() {
     return (
       <Modal show={this.props.isOpen} onHide={this.props.close}>
         <Form action="" horizontal onSubmit={this.submit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add new place</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <FormGroup controlId="name">
-            <Col lg={2}>
-              <ControlLabel>Name</ControlLabel>
-            </Col>
-            <Col lg={10}>
-              <FormControl placeholder="Name" value={this.state.name} onChange={this.onChangeName}/>
-            </Col>
-          </FormGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button type="submit">Add</Button>
-        </Modal.Footer>
-      </Form>
+          <Modal.Header closeButton>
+            <Modal.Title>Add new place</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FormGroup controlId="name">
+              <SearchPlace height="200px" selectPlace={this.onSelectPlace}/>
+            </FormGroup>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit">Add</Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
 
     )
@@ -84,18 +76,16 @@ class AddForm extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {
-    places: state.places.places,
-    loading: state.places.loading
-  }
+  return {places: state.places.places, loading: state.places.loading}
 }
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    createPlace:(place) => {
+    createPlace: (place) => {
       let newPlace = {
-        ...place,
-        createdAt : new Date(),
+        name : place.place.name,
+        place : place.place.place_id,
+        createdAt: new Date(),
         score: 0
       }
       dispatch(ActionPlace.create(newPlace));
@@ -113,8 +103,10 @@ class Places extends React.Component {
     this.state = {
       addModalOpen: false,
       view: 'list',
-      sort : 'alpha'
+      sort: 'alpha',
+      google: null
     }
+
   }
 
   close = () => {
@@ -129,13 +121,15 @@ class Places extends React.Component {
     this.setState({view: view});
   }
   componentWillMount() {
+
+
     this.props.list();
+
   }
 
-
   render() {
-    let view = this.props.loading ?
-      <Col lg={12} className="text-center"><FontAwesome name="spinner" spin size='2x'/></Col>
+    let view = this.props.loading
+      ? <Col lg={12} className="text-center"><FontAwesome name="spinner" spin size='2x'/></Col>
       : <Place.View places={this.props.places} type={this.state.view} sort={this.state.sort}/>;
     return (
       <ContentWrapper header="Places" subHeader="All travel places">
@@ -153,10 +147,7 @@ class Places extends React.Component {
           {view}
         </div>
 
-        <AddForm
-          close={this.close}
-          isOpen={this.state.addModalOpen}
-          onSubmit={this.props.createPlace}/>
+        <AddForm close={this.close} isOpen={this.state.addModalOpen} onSubmit={this.props.createPlace}/>
       </ContentWrapper>
     )
   }
