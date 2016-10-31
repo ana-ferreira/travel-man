@@ -12,8 +12,7 @@ const messages = (state = stateDefault, action) => {
       }
     case 'MARK_MESSAGES_READ_FULFILLED':
       return {
-        ...state,
-        messages: [...action.payload]
+        ...state
       }
     default:
       return state;

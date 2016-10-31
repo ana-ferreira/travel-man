@@ -26,10 +26,10 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     markMessagesRead : () => {
-      dispatch({type : 'MARK_MESSAGES_READ'})
+      dispatch(ActionMessage.markAllRead())
     },
     markNotificationsRead : () => {
-      dispatch({type : 'MARK_NOTIFICATIONS_READ'})
+      dispatch(ActionNotification.markAllRead())
     },
     listMessages : () => {
       dispatch(ActionMessage.list());
@@ -51,13 +51,13 @@ class Menus extends React.Component {
     return (
       <div className="navbar-custom-menu">
         <ul className="nav navbar-nav">
-          <MessagesMenu messages={this.props.messages}/>
-          <NotificationsMenu notifications={this.props.notifications} />
+          <MessagesMenu messages={this.props.messages} onAllRead={this.props.markMessagesRead}/>
+          <NotificationsMenu notifications={this.props.notifications} onAllRead={this.props.markNotificationsRead} />
           {/*<TasksMenu tasks={tasks} />*/}
           <UserAccountMenu />
           {/* Control Sidebar Toggle Button */}
           <li>
-            <a href="#" onClick={this.props.toggleControl}>
+            <a href="javascript:" onClick={this.props.toggleControl}>
               <FontAwesome name="gears" />
             </a>
           </li>

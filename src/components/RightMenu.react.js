@@ -60,8 +60,8 @@ const Message = (props) => {
 export const MessagesMenu = (props) => {
   let header = (
     <p>
-      {`You have ${props.messages.length} messages`}
-      <a onClick={props.onClickDone} className="pull-right" href="#">Mark all as read</a>
+      {`You have ${props.messages.length} message(s)`}
+      <a onClick={props.onClickDone} className="pull-right" onClick={props.onAllRead}>Mark all as read</a>
     </p>
   )
   return (
@@ -88,8 +88,8 @@ const Notification = (props) => {
 export const NotificationsMenu = (props) => {
   let header = (
     <p>
-      {`You have ${props.notifications.length} notifications`}
-      <a onClick={props.onClickDone} className="pull-right" href="#">Mark all as read</a>
+      {`You have ${props.notifications.length} notification(s)`}
+      <a onClick={props.onClickDone} className="pull-right" onClick={props.onAllRead}>Mark all as read</a>
     </p>
   )
   return (

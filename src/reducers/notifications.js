@@ -6,15 +6,13 @@ const stateDefault = {
 const notifications = (state = stateDefault, action) => {
   switch (action.type) {
     case 'LIST_NOTIFICATIONS_FULFILLED':
-      console.log('heeeress')
       return {
         ...state,
         notifications: action.payload
       }
     case 'MARK_NOTIFICATIONS_READ_FULFILLED':
       return {
-        ...state,
-        notifications: [...action.payload]
+        ...state
       }
     default:
       return state;

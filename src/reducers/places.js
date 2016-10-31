@@ -5,7 +5,7 @@ const stateDefault = {
 
 
 const places = (state = stateDefault, action) => {
-  if (action.type.includes('PENDING')) {
+  if (action.type.includes('PLACE') && action.type.includes('PENDING')) {
     return {
       ...state,
       loading: true
