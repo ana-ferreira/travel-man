@@ -33,7 +33,6 @@ const WebpackProviderConfig = new webpack.ProvidePlugin({
 });
 
 var PROD = process.env.NODE_ENV === 'production';
-console.log('production');
 const DefinePlugin = new webpack.DefinePlugin({
   'process.env': {
     'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')

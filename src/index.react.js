@@ -11,7 +11,7 @@ import promise from 'redux-promise-middleware';
 
 import reducers from 'reducers';
 
-const middlwares = [
+const middlewares = [
   thunk,
   promise()
 ];
