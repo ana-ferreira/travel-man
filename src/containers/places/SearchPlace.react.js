@@ -14,12 +14,6 @@ class SearchPlace extends React.Component {
 
   componentWillMount() {
     this.url = `https://maps.googleapis.com/maps/api/js?key=${this.props.apiKey}&libraries=places`;
-
-  }
-
-
-  onSelect = () => {
-
   }
 
   componentDidMount() {
@@ -84,7 +78,7 @@ class SearchPlace extends React.Component {
     }
     return (
       <div className="row">
-        <div className="col-lg-12" style={{height: this.props.height}}>
+        <div className="col-lg-12" style={{height: this.props.height || '500px'}}>
           <style>
             {pac}
           </style>
