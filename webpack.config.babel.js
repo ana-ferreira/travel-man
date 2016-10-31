@@ -59,7 +59,7 @@ let alias = {
   'jquery-ui': __dirname + '/node_modules/jquery-ui/ui/core.js'
 }
 
-var PROD = JSON.parse(process.env.PROD_ENV || '0');
+var PROD = process.env.NODE_ENV === 'production';
 
 
 let config = {
