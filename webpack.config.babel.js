@@ -41,6 +41,8 @@ let plugins = [
   WebpackProviderConfig
 ];
 
+
+
 let loaders = [
   { test: /.jsx?$/, loader: 'babel-loader', exclude: /node_modules/ },
   { test: /\.css$/, loader: 'style-loader!css-loader' },
@@ -56,9 +58,14 @@ let alias = {
   jquery: __dirname + '/node_modules/jquery/dist/jquery.min.js',
   'jquery-ui': __dirname + '/node_modules/jquery-ui/ui/core.js'
 }
+
+var PROD = JSON.parse(process.env.PROD_ENV || '0');
+
+
 let config = {
   entry: './src/index.react.js',
-  output: { path: __dirname + '/docs/dist', filename: 'bundle.[hash].js' },
+  output: { path: __dirname + '/docs/dist', filename: PROD ? '[hash].js' : 'bundle.js' },
+  devtool: 'source-map',
   devServer: {
     historyApiFallback: true,
     inline: true
@@ -73,7 +80,12 @@ let config = {
   module: {
     loaders: loaders
   },
-  plugins: plugins
+  plugins: PROD ? [
+    ...plugins,
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ] : plugins
 }
 
 

@@ -1,5 +1,6 @@
 import UserImage from './UserImage.react';
 import FontAwesome from 'react-fontawesome';
+import Moment from 'react-moment';
 import gravatar from 'utils/gravatar';
 /**
 * Generic Menu
@@ -45,7 +46,10 @@ const Message = (props) => {
         </div>
         <h4>
           {props.msg.from}
-          <small><i className="fa fa-clock-o" /> {props.msg.createdAt}</small>
+          <small>
+            <FontAwesome name="clock-o" />{' '}
+            <Moment fromNow>{props.msg.createdAt}</Moment>
+          </small>
         </h4>
         <p>{props.msg.message}</p>
       </a>
