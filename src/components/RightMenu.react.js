@@ -118,14 +118,14 @@ export const UserAccountMenu = (props) => {
     <li className="dropdown user user-menu">
       <a href="#" className="dropdown-toggle" data-toggle="dropdown">
         <UserImage src={imgSrc} className="user-image" />
-        <span className="hidden-xs">Alexander Pierce</span>
+        <span className="hidden-xs">User</span>
       </a>
       <ul className="dropdown-menu">
         {/* User image */}
         <li className="user-header">
           <UserImage src={imgSrc} />
           <p>
-            Alexander Pierce - Web Developer
+            User - Type
             <small>Member since Nov. 2012</small>
           </p>
         </li>
