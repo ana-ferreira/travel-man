@@ -6,7 +6,7 @@ import Place from 'components/Place.react';
 import ActionPlace from 'actions/places';
 
 
-
+import FontAwesome from 'react-fontawesome';
 import {
   Modal,
   Button,
@@ -17,7 +17,7 @@ import {
   FormGroup,
   ControlLabel
 } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+
 
 const ViewModes = (props) => (
 
@@ -84,7 +84,10 @@ class AddForm extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-  return {places: state.places.places}
+  return {
+    places: state.places.places,
+    loading: state.places.loading
+  }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -130,8 +133,10 @@ class Places extends React.Component {
 
 
   render() {
-
-
+    let view = this.props.loading ?
+      <Col lg={12} className="text-center"><FontAwesome name="spinner" spin size='2x'/></Col>
+      : <Place.View places={this.props.places} type={this.state.view}/>;
+    console.log(this.props.loading, 'LOADINGGG');
     return (
       <ContentWrapper header="Places" subHeader="All travel places">
         <div className="row">
@@ -145,7 +150,7 @@ class Places extends React.Component {
         </div>
         <p></p>
         <div className="row">
-          <Place.View places={this.props.places} type={this.state.view}/>
+          {view}
         </div>
 
         <AddForm

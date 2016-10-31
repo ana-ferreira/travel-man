@@ -11,7 +11,7 @@ const UserPanel = (props) => {
         <UserImage src={srcImg} />
       </div>
       <div className="pull-left info">
-        <p>Alexander Pierce</p>
+        <p>User</p>
         <a href="#"><i className="fa fa-circle text-success" /> Online</a>
       </div>
     </div>

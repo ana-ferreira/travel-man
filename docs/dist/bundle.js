@@ -42052,7 +42052,7 @@
 	      React.createElement(
 	        'span',
 	        { className: 'hidden-xs' },
-	        'Alexander Pierce'
+	        'User'
 	      )
 	    ),
 	    React.createElement(
@@ -42065,7 +42065,7 @@
 	        React.createElement(
 	          'p',
 	          null,
-	          'Alexander Pierce - Web Developer',
+	          'User - Type',
 	          React.createElement(
 	            'small',
 	            null,
@@ -42329,7 +42329,7 @@
 	      React.createElement(
 	        'p',
 	        null,
-	        'Alexander Pierce'
+	        'User'
 	      ),
 	      React.createElement(
 	        'a',
@@ -42537,11 +42537,11 @@
 
 	var _places2 = _interopRequireDefault(_places);
 
-	var _reactBootstrap = __webpack_require__(412);
-
 	var _reactFontawesome = __webpack_require__(295);
 
 	var _reactFontawesome2 = _interopRequireDefault(_reactFontawesome);
+
+	var _reactBootstrap = __webpack_require__(412);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -42660,7 +42660,10 @@
 	}(_react2.default.Component);
 
 	var mapStateToProps = function mapStateToProps(state, props) {
-	  return { places: state.places.places };
+	  return {
+	    places: state.places.places,
+	    loading: state.places.loading
+	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch, props) {
@@ -42715,7 +42718,12 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-
+	      var view = this.props.loading ? _react2.default.createElement(
+	        _reactBootstrap.Col,
+	        { lg: 12, className: 'text-center' },
+	        _react2.default.createElement(_reactFontawesome2.default, { name: 'spinner', spin: true, size: '2x' })
+	      ) : _react2.default.createElement(_Place2.default.View, { places: this.props.places, type: this.state.view });
+	      console.log(this.props.loading, 'LOADINGGG');
 	      return _react2.default.createElement(
 	        _ContentWrapper2.default,
 	        { header: 'Places', subHeader: 'All travel places' },
@@ -42738,7 +42746,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
-	          _react2.default.createElement(_Place2.default.View, { places: this.props.places, type: this.state.view })
+	          view
 	        ),
 	        _react2.default.createElement(AddForm, {
 	          close: this.close,
@@ -79436,18 +79444,30 @@
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
+	var stateDefault = {
+	  places: [],
+	  loading: false
+	};
+
 	var places = function places() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { places: [] };
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : stateDefault;
 	  var action = arguments[1];
 
+	  if (action.type.includes('START')) {
+	    return _extends({}, state, {
+	      loading: true
+	    });
+	  }
 	  switch (action.type) {
 	    case 'PLACE_CREATE_SUCCESS':
 	      return _extends({}, state, {
-	        places: [].concat(_toConsumableArray(state.places), [action.place])
+	        places: [].concat(_toConsumableArray(state.places), [action.place]),
+	        loading: false
 	      });
 	    case 'PLACE_LIST_SUCCESS':
 	      return _extends({}, state, {
-	        places: action.places
+	        places: action.places,
+	        loading: false
 	      });
 	    default:
 	      return state;
