@@ -42,9 +42,15 @@ const mapDispatchToProps = (dispatch, props) => {
 }
 
 class Menus extends React.Component {
+  componentWillMount(){
+      this.props.listMessages();
+      this.props.listNotifications();
+  }
   componentDidMount(){
-    this.props.listMessages();
-    this.props.listNotifications();
+    setInterval(() => {
+      this.props.listMessages();
+      this.props.listNotifications();
+    }, 10000);
   }
 
   render(){
