@@ -5,8 +5,8 @@ import {Provider} from 'react-redux';
 import { Router, Route, hashHistory, IndexRoute, Redirect} from 'react-router';
 
 import Root from 'containers/root/Root.react';
-import Lists from 'containers/lists/Lists.react';
 import NotFound from 'components/NotFound.react';
+import menu from 'config/menu';
 
 const main = () =>  (
   <div>
@@ -41,8 +41,12 @@ class App extends React.Component {
         <Router history={hashHistory}>
           <Route path="/" component={Root} >
             <IndexRoute component={main} />
-            <Route path="lists" component={Lists} />
             <Route path='/404' component={NotFound} />
+            {
+              menu.filter(item => !!item.component ).map((item, idx) => {
+                  return <Route key={idx} path={item.link} component={item.component} />
+              })
+            }
             <Redirect from='*' to='/404' />
           </Route>
         </Router>

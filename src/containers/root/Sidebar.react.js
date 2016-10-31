@@ -1,6 +1,7 @@
 import srcImg from 'admin-lte/dist/img/user2-160x160.jpg';
 import UserImage from 'components/UserImage.react';
 import SidebarMenu from 'containers/root/SidebarMenu.react';
+import FontAwesome from 'react-fontawesome';
 import menu from 'config/menu';
 
 const UserPanel = (props) => {
@@ -31,7 +32,8 @@ export default (props) => {
             <div className="input-group">
               <input type="text" name="q" className="form-control" placeholder="Search..." />
               <span className="input-group-btn">
-                <button type="submit" name="search" id="search-btn" className="btn btn-flat"><i className="fa fa-search" />
+                <button type="submit" name="search" id="search-btn" className="btn btn-flat">
+                  <FontAwesome name="search" />
               </button>
             </span>
           </div>
