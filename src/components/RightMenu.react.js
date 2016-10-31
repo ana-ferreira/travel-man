@@ -1,7 +1,6 @@
-import imgSrc from 'admin-lte/dist/img/user2-160x160.jpg';
 import UserImage from './UserImage.react';
 import FontAwesome from 'react-fontawesome';
-import md5 from 'md5';
+import gravatar from 'utils/gravatar';
 /**
 * Generic Menu
 */
@@ -31,16 +30,18 @@ const Menu = (props) => {
   )
 }
 
+
+
 /** Message **/
 const Message = (props) => {
-  let imgSrc = !!props.msg.userImage ? props.msg.userImage.trim().toLowerCase() : '';
 
-  let gravatar = md5(imgSrc);
+
+  let imgSrc = gravatar(props.msg.userImage);
   return (
     <li>
       <a href="#">
         <div className="pull-left">
-          <img src={`https://www.gravatar.com/avatar/${gravatar}.jpg`} className="img-circle" alt="User Image" />
+          <img src={imgSrc} className="img-circle" alt="User Image" />
         </div>
         <h4>
           {props.msg.from}
@@ -130,6 +131,7 @@ export const TasksMenu = (props) => {
 
 
 export const UserAccountMenu = (props) => {
+  const imgSrc = gravatar('lucaskatayama@gmail.com');
   return (
     <li className="dropdown user user-menu">
       <a href="#" className="dropdown-toggle" data-toggle="dropdown">

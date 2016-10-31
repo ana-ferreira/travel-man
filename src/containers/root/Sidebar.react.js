@@ -1,10 +1,11 @@
-import srcImg from 'admin-lte/dist/img/user2-160x160.jpg';
 import UserImage from 'components/UserImage.react';
 import SidebarMenu from 'containers/root/SidebarMenu.react';
 import FontAwesome from 'react-fontawesome';
 import menu from 'config/menu';
+import gravatar from 'utils/gravatar';
 
 const UserPanel = (props) => {
+  let srcImg = gravatar('lucaskatayama@gmail.com');
   return (
     <div className="user-panel">
       <div className="pull-left image">
