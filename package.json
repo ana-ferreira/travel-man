@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --hot --inline",
-    "build" : "./node_modules/.bin/webpack --progress --color -p"
+    "build" : "env NODE_ENV='production' ./node_modules/.bin/webpack --progress --color -p"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
