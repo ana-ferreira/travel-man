@@ -33,8 +33,11 @@ const WebpackProviderConfig = new webpack.ProvidePlugin({
 });
 
 var PROD = process.env.NODE_ENV === 'production';
+console.log('production');
 const DefinePlugin = new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+  'process.env': {
+    'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+  }
 });
 
 
@@ -70,7 +73,7 @@ let alias = {
 let config = {
   entry: './src/index.react.js',
   output: { path: __dirname + '/docs/dist', filename: PROD ? '[hash].js' : 'bundle.js' },
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
     inline: true
