@@ -47,12 +47,12 @@ const ListCard = (props) => {
 const Item = (props) => (
   <tr>
     <td>{props.name}</td>
+    <td><Moment fromNow>{props.createdAt}</Moment></td>
     <td>{props.score}</td>
   </tr>
 )
 
 const ListItem = (props) => {
-  console.log('List Items', props.items)
   let items = props.items.map((item, idx) => (<Item key={idx} {...item}/>));
   return (
     <Col lg={12}>
@@ -62,6 +62,7 @@ const ListItem = (props) => {
             <tbody>
               <tr>
                 <th>Name</th>
+                <th>Date Created</th>
                 <th>Score</th>
               </tr>
               {items}
@@ -74,7 +75,6 @@ const ListItem = (props) => {
 }
 
 const View = (props) => {
-
   let placesView = props.type === 'card'
     ? ListCard
     : ListItem;

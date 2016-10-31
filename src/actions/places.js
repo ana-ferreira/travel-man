@@ -1,24 +1,20 @@
 import axios from 'axios';
-
+import { createAction } from 'redux-actions';
 
 const apiEndpoint = 'https://api.mlab.com/api/1';
 const dbName = 'travel-man'
 const collectionName = 'places';
 const apiKey = process.env.API_KEY;
 
-const create = place => dispatch => {
+const create = createAction('PLACE_CREATE', (place) => {
   //Start creating
-  dispatch({ type: 'PLACE_CREATE_START' });
-  axios.post(`${apiEndpoint}/databases/${dbName}/collections/${collectionName}?apiKey=${apiKey}`, place)
-    .then(e => dispatch({ type: 'PLACE_CREATE_SUCCESS', place: place }))
-    .catch(e => dispatch({ type: 'PLACE_CREATE_ERROR', msg: e }));
-}
+  return axios.post(`${apiEndpoint}/databases/${dbName}/collections/${collectionName}?apiKey=${apiKey}`, place)
+    .then(e => e.data);
+})
 
-const list = () => dispatch => {
-  dispatch({ type: 'PLACE_LIST_START' });
-  axios.get(`${apiEndpoint}/databases/${dbName}/collections/${collectionName}?apiKey=${apiKey}`)
-    .then(json => dispatch({ type: 'PLACE_LIST_SUCCESS', places: json.data }))
-    .catch(e => dispatch({ type: 'PLACE_LIST_ERROR', msg: e }));
-}
+const list = createAction('PLACE_LIST', () => {
+  return axios.get(`${apiEndpoint}/databases/${dbName}/collections/${collectionName}?apiKey=${apiKey}`)
+    .then(json => json.data);
+})
 
 export default { create, list };
