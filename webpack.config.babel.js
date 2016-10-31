@@ -3,7 +3,7 @@ import DotenvPlugin from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import path from 'path';
-import {version} from './package.json';
+import { version } from './package.json';
 
 const DotenvPluginConfig = new DotenvPlugin({
   safe: false,
@@ -46,7 +46,7 @@ let loaders = [
   { test: /\.css$/, loader: 'style-loader!css-loader' },
   { test: /\.png$/, loader: "url-loader?limit=100000" },
   { test: /\.jpg$/, loader: "file-loader" },
-  { test: /\.sass$/, loaders: ['style','css', 'sass']},
+  { test: /\.sass$/, loaders: ['style', 'css', 'sass'] },
   { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
   { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
   { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
@@ -58,13 +58,13 @@ let alias = {
 }
 let config = {
   entry: './src/index.react.js',
-  output: { path: __dirname + '/dist', filename: 'bundle.js' },
+  output: { path: __dirname + '/docs/dist', filename: 'bundle.js' },
   devServer: {
     historyApiFallback: true,
     inline: true
   },
-  resolve : {
-    root : [
+  resolve: {
+    root: [
       path.resolve('./src'),
       path.resolve('./node_modules')
     ]

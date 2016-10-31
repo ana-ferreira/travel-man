@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 
 import ContentWrapper from 'components/ContentWrapper.react';
 import Place from 'components/Place.react';
+import ActionPlace from 'actions/places';
+
+
+
 import {
   Modal,
   Button,
@@ -48,6 +52,7 @@ class AddForm extends React.Component {
     this.props.onSubmit({
       name : this.state.name
     });
+    this.setState({name : ''});
     this.props.close();
   }
 
@@ -85,7 +90,15 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     createPlace:(place) => {
-      dispatch({type: 'PLACE_CREATE', place: place});
+      let newPlace = {
+        ...place,
+        createdAt : new Date(),
+        score: 0
+      }
+      dispatch(ActionPlace.create(newPlace));
+    },
+    list: () => {
+      dispatch(ActionPlace.list());
     }
   }
 }
@@ -110,6 +123,9 @@ class Places extends React.Component {
 
   changeView = (view) => () => {
     this.setState({view: view});
+  }
+  componentWillMount() {
+    this.props.list();
   }
 
 

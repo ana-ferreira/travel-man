@@ -1,31 +1,20 @@
-const initialArrayPlaces = [{
-    name: 'Bahia',
-    img: '',
-    score: 9
-  },
-  {
-    name: 'Piracicaba',
-    img: 'http://www.gibametais.com.br/imagens/piracicaba/cidade.jpg',
-    score: 5.6
-  },
-  {
-    name: 'Londres',
-    img: 'http://previews.123rf.com/images/klavapuk/klavapuk1209/klavapuk120900009/15066959-Bandera-de-Inglaterra-de-los-s-mbolos-del-Reino-Unido-y-Londres-Foto-de-archivo.jpg',
-    score: 9
-  }
-]
+import axios from 'axios';
 
 
 
 
-const places = (state = { places: initialArrayPlaces }, action) => {
+const places = (state = { places: [] }, action) => {
   switch (action.type) {
-    case 'PLACE_CREATE':
+    case 'PLACE_CREATE_SUCCESS':
       return {
         ...state,
         places: [...state.places, action.place]
       }
-      break;
+    case 'PLACE_LIST_SUCCESS':
+      return {
+        ...state,
+        places: action.places
+      }
     default:
       return state;
   }
