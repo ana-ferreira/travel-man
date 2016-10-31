@@ -58,7 +58,7 @@ let alias = {
 }
 let config = {
   entry: './src/index.react.js',
-  output: { path: __dirname + '/docs/dist', filename: 'bundle.js' },
+  output: { path: __dirname + '/docs/dist', filename: 'bundle.[hash].js' },
   devServer: {
     historyApiFallback: true,
     inline: true
