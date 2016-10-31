@@ -11,15 +11,16 @@ import promise from 'redux-promise-middleware';
 
 import reducers from 'reducers';
 
-let middlwares = applyMiddleware([
+const middlwares = [
   thunk,
   promise()
-]);
-if(process.env.NODE_ENV !== 'production'){
-  middlwares = middlwares( reduxLogger());
+];
+
+if (process.env.NODE_ENV === `development`) {
+  middlewares.push(reduxLogger());
 }
 
-const store = createStore(reducers, middlwares);
+const store = createStore(reducers, applyMiddleware(...middlewares));
 
 
 
