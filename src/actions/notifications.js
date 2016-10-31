@@ -7,7 +7,6 @@ const collectionName = 'notifications';
 const apiKey = process.env.API_KEY;
 
 export const list = () => {
-  console.log(`${apiEndpoint}/databases/${dbName}/collections/${collectionName}?apiKey=${apiKey}&q={read : {$ne : true}}`);
   return {
     type: 'LIST_NOTIFICATIONS',
     payload: axios
